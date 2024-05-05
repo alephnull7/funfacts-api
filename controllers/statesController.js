@@ -112,8 +112,8 @@ class StatesController {
             this.sentBadRequest(res, 'Valid funfacts required');
         }
 
-        const isCreate = this.state.funfacts.length === 0;
-        this.state.funfacts = this.state.funfacts.concat(this.body.funfacts);
+        const isCreate = !this.state.hasOwnProperty('funfacts');
+        this.state.funfacts = this.body.funfacts.concat(this.state.funfacts);
         isCreate ? await this.createState(res) : await this.updateState(res);
     }
 
@@ -173,7 +173,7 @@ class StatesController {
                 return false;
             }
         }
-        if (this.body?.index > this.state.funfacts.length) {
+        if (this.body?.index > this.state?.funfacts?.length) {
             return false;
         }
         return true;
