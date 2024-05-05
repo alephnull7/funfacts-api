@@ -56,36 +56,36 @@ class StatesController {
     }
 
     async getState(req, res) {
-        await this.setState(req);
+        await this.setReqProperties(req);
         res.status(200).json(this.state);
     }
 
     async getFunFact(req, res) {
-        await this.setState(req);
+        await this.setReqProperties(req);
         this.setFunFact();
         res.status(200).json(this.funFact);
     }
 
     async getStateCapital(req, res) {
-        await this.setState(req);
+        await this.setReqProperties(req);
         this.setStateSubset('capital_city', 'capital');
         res.status(200).json(this.state);
     }
 
     async getStateNickname(req, res) {
-        await this.setState(req);
+        await this.setReqProperties(req);
         this.setStateSubset('nickname');
         res.status(200).json(this.state);
     }
 
     async getStatePopulation(req, res) {
-        await this.setState(req);
+        await this.setReqProperties(req);
         this.setStateSubset('population');
         res.status(200).json(this.state);
     }
 
     async getStateAdmission(req, res) {
-        await this.setState(req);
+        await this.setReqProperties(req);
         this.setStateSubset('admission_date', 'admitted');
         res.status(200).json(this.state);
     }
