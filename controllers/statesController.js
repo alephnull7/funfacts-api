@@ -22,7 +22,7 @@ class StatesController {
     async setState() {
         this.state = this.states.find((state) => state.code === this.stateCode);
         const stateMongo = await State.findOne({ stateCode: this.stateCode }).exec();
-        stateMongo ? this.state.funfacts = stateMongo.funfacts : null;
+        if (stateMongo) this.state.funfacts = stateMongo.funfacts;
     }
 
     async setReqProperties(req) {
