@@ -6,7 +6,7 @@ function undefinedRoute(req, res, responseBody) {
     const accept = req.get('Accept');
     switch (accept) {
         case 'application/json':
-            res.json({error: responseBody});
+            res.json({ message: responseBody });
             break;
         case 'text/html':
             const localPath = path.join(__dirname, 'views', '404.html');
