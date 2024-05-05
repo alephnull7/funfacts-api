@@ -103,6 +103,8 @@ class StatesController {
         if (funFacts) {
             const funfact = funFacts[Math.floor(Math.random() * funFacts.length)];
             this.funFact = { funfact };
+        } else {
+            this.funFact = { message: `No Fun Facts found for ${this.state.state}` };
         }
     }
 
