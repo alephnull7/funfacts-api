@@ -1,11 +1,10 @@
 const path = require("path");
 
-function undefinedRoute(req, res) {
-    res.status(404)
-    const responseBody = '404 Not Found';
+function undefinedRoute(req, res, responseBody) {
+    res.status(404);
 
     const accept = req.get('Accept');
-    switch(accept) {
+    switch (accept) {
         case 'application/json':
             res.json({error: responseBody});
             break;
@@ -18,4 +17,14 @@ function undefinedRoute(req, res) {
     }
 }
 
-module.exports = undefinedRoute;
+function undefinedRouteDefault(req, res, next) {
+    const responseBody = '404 Not Found';
+    return undefinedRoute(req, res, responseBody);
+}
+
+function undefinedRouteState(req, res, next) {
+    const responseBody = 'Invalid state abbreviation parameter';
+    return undefinedRoute(req, res, responseBody);
+}
+
+module.exports = { undefinedRouteDefault, undefinedRouteState };

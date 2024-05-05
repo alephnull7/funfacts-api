@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const statesRouter = require('./routes/statesRouter');
-const undefinedRoute = require('./routes/undefinedRoute');
+const { undefinedRouteDefault } = require('./routes/undefinedRoute');
 const database = require('./config/database');
 const mongoose = require("mongoose");
 const PORT = process.env.PORT || 8000;
@@ -18,7 +18,7 @@ app.use(cors());
 app.use('/states', statesRouter);
 
 // Handle undefined routes
-app.use(undefinedRoute);
+app.use(undefinedRouteDefault);
 
 // Start the server
 app.listen(PORT, () => {
