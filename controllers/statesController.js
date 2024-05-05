@@ -92,7 +92,8 @@ class StatesController {
 
     setStateSubset(propKey, propName) {
         if (typeof propName === 'undefined') propName = propKey;
-        const propVal = this.state[propKey];
+        let propVal = this.state[propKey];
+        if (typeof propVal === 'number') propVal = propVal.toLocaleString(undefined, { useGrouping: true });
         this.state = { state: this.state.state };
         this.state[propName] = propVal;
     }
