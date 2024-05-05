@@ -92,10 +92,9 @@ class StatesController {
 
     setStateSubset(propKey, propName) {
         if (typeof propName === 'undefined') propName = propKey;
-        this.state = {
-            state: this.state.state,
-            propName: this.state[propKey]
-        };
+        const propVal = this.state[propKey];
+        this.state = { state: this.state.state };
+        this.state[propName] = propVal;
     }
 
     setFunFact() {
