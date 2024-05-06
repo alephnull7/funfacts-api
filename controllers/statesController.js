@@ -20,7 +20,6 @@ class StatesController {
     }
 
     async setState() {
-        console.log(this.states);
         this.state = this.states.find((state) => state.code === this.stateCode);
         const stateMongo = await State.findOne({ stateCode: this.stateCode }).exec();
         console.log(`The State document for ${this.state.state}: `, stateMongo);
