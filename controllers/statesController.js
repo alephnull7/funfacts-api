@@ -105,7 +105,7 @@ class StatesController {
 
     setFunFact() {
         const funFacts = this.state.funfacts;
-        if (funFacts !== null) {
+        if (funFacts !== undefined) {
             const funfact = funFacts[Math.floor(Math.random() * funFacts.length)];
             this.funFact = { funfact };
         } else {
