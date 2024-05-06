@@ -15,7 +15,7 @@ class StatesController {
         const statesMongo = await State.find({}).sort({ stateCode: 1 });
         this.states.forEach((stateLocal) => {
             const mongoMatch = statesMongo.find(stateMongo => stateLocal.code === stateMongo.stateCode);
-            stateLocal.funfacts = mongoMatch ? mongoMatch.funfacts : [];
+            if (mongoMatch !== undefined) stateLocal.funfacts = mongoMatch.funfacts;
         });
     }
 
