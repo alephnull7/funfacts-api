@@ -115,6 +115,7 @@ class StatesController {
             return this.sentBadRequest(res, 'Valid funfacts required');
         }
 
+        console.log(`Creating funfacts for ${this.state.state}`);
         const isCreate = !this.state.hasOwnProperty('funfacts');
         if (isCreate) {
             await this.createState(res);
@@ -131,6 +132,7 @@ class StatesController {
             return this.sentBadRequest(res, 'Valid funfact and index required');
         }
 
+        console.log(`Updating funfact for ${this.state.state} at index ${this.body.index-1}`);
         this.state.funfacts.splice(this.body.index-1, 1, this.body.funfact);
         await this.updateState(res);
     }
@@ -142,12 +144,14 @@ class StatesController {
             return this.sentBadRequest(res, 'Valid index required');
         }
 
+        console.log(`Deleting funfact for ${this.state.state} at index ${this.body.index-1}`);
         this.state.funfacts.splice(this.body.index-1, 1);
         await this.updateState(res);
     }
 
     async createState(res) {
         try {
+            console.log(`Creating new State entity for ${this.state.state}: `, this.body.funfacts);
             const result = await State.create({
                 stateCode: this.stateCode,
                 funfacts: this.body.funfacts
@@ -160,6 +164,7 @@ class StatesController {
 
     async updateState(res){
         try {
+            console.log(`Updating State entity for ${this.state.state}: `, this.state.funfacts);
             const result = await State.updateOne(
                 { stateCode: this.stateCode },
                 { funfacts: this.state.funfacts }
