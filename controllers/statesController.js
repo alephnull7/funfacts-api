@@ -116,7 +116,12 @@ class StatesController {
         }
 
         const isCreate = !this.state.hasOwnProperty('funfacts');
-        isCreate ? await this.createState(res) : await this.updateState(res);
+        if (isCreate) {
+            await this.createState(res);
+        } else {
+            this.state.funfacts = this.state.funfacts.concat(this.body.funfacts);
+            await this.updateState(res);
+        }
     }
 
     async updateFunFact(req, res) {
@@ -155,7 +160,6 @@ class StatesController {
 
     async updateState(res){
         try {
-            this.state.funfacts = this.state.funfacts.concat(this.body.funfacts);
             const result = await State.updateOne(
                 { stateCode: this.stateCode },
                 { funfacts: this.state.funfacts }
