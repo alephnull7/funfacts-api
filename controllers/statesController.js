@@ -112,7 +112,7 @@ class StatesController {
         await this.setReqProperties(req);
         const properties = ['funfacts'];
         if (!this.verifyBody(properties)) {
-            this.sentBadRequest(res, 'Valid funfacts required');
+            return this.sentBadRequest(res, 'Valid funfacts required');
         }
 
         const isCreate = !this.state.hasOwnProperty('funfacts');
@@ -124,7 +124,7 @@ class StatesController {
         await this.setReqProperties(req);
         const properties = ['funfact', 'index'];
         if (!this.verifyBody(properties)) {
-            this.sentBadRequest(res, 'Valid funfact and index required');
+            return this.sentBadRequest(res, 'Valid funfact and index required');
         }
 
         this.state.funfacts.splice(this.body.index-1, 1, this.body.funfact);
@@ -135,7 +135,7 @@ class StatesController {
         await this.setReqProperties(req);
         const properties = ['index'];
         if (!this.verifyBody(properties)) {
-            this.sentBadRequest(res, 'Valid index required');
+            return this.sentBadRequest(res, 'Valid index required');
         }
 
         this.state.funfacts.splice(this.body.index-1, 1);
