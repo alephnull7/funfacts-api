@@ -108,7 +108,7 @@ class StatesController {
         } else {
             this.funFact = { message: `No Fun Facts found for ${this.state.state}` };
         }
-        console.log(`The response body for the funfact GET request: `, this.state);
+        console.log(`The response body for the funfact GET request: `, this.funFact);
     }
 
     async createFunFact(req, res) {
@@ -185,7 +185,7 @@ class StatesController {
     verifyBody(properties){
         for (const property of properties) {
             if (!this.body.hasOwnProperty(property)) {
-                return false;
+                return property;
             }
         }
         if (this.body?.index > this.state?.funfacts?.length) {
