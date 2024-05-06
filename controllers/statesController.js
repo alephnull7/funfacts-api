@@ -23,6 +23,8 @@ class StatesController {
         this.state = this.states.find((state) => state.code === this.stateCode);
         const stateMongo = await State.findOne({ stateCode: this.stateCode }).exec();
         console.log(`The State document for ${this.state.state}: `, stateMongo);
+        console.log(`The State document for ${this.state.state} is null: `, stateMongo === null);
+        console.log(`The JSON entry for ${this.state.state}: `, this.state);
         if (stateMongo !== null) this.state.funfacts = stateMongo.funfacts;
     }
 
