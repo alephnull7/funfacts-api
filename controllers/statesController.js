@@ -159,6 +159,7 @@ class StatesController {
                 stateCode: this.stateCode,
                 funfacts: this.body.funfacts
             });
+            console.log(`Result of creating new State entity for ${this.state.state}: `, result);
             res.status(201).json(result);
         } catch (e) {
             console.error(e);
@@ -172,6 +173,7 @@ class StatesController {
                 { stateCode: this.stateCode },
                 { funfacts: this.state.funfacts }
             );
+            console.log(`Result of updating State entity for ${this.state.state}: `, result);
             res.status(200).json(result);
         } catch (e) {
             console.error(e);
