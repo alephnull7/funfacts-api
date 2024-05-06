@@ -19,9 +19,6 @@ app.use((req, res, next) => {
     setTimeout(next, 1000);
 });
 
-// Root route
-app.use('/', undefinedRouteDefault);
-
 // API routes
 app.use('/states', statesRouter);
 
