@@ -159,10 +159,9 @@ class StatesController {
     async updateState(res){
         try {
             console.log(`Updating State entity for ${this.state.state}: `, this.state.funfacts);
-            const result = await State.updateOne(
-                { stateCode: this.stateCode },
-                { funfacts: this.state.funfacts }
-            );
+            const stateMongo = await State.findOne({ stateCode: this.stateCode }).exec();
+            stateMongo.funfacts = this.state.funfacts;
+            const result = await stateMongo.save();
             console.log(`Result of updating State entity for ${this.state.state}: `, result);
             res.status(200).json(result);
         } catch (e) {
