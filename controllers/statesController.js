@@ -187,7 +187,7 @@ class StatesController {
 
     verifyUpdateBody(){
         const index = this.body.index;
-        if (index !== undefined) {
+        if (index === undefined) {
             return 'State fun fact index value required';
         }
 
