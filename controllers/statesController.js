@@ -134,7 +134,7 @@ class StatesController {
 
     async deleteFunFact(req, res) {
         await this.setReqProperties(req);
-        const message = this.verifyUpdateBody();
+        const message = this.verifyDeleteBody();
         if (message !== null) return this.sentBadRequest(res, message);
 
         console.log(`Deleting funfact for ${this.state.state} at index ${this.body.index-1}`);
@@ -194,6 +194,25 @@ class StatesController {
         const funfact = this.body.funfact;
         if (typeof funfact !== 'string') {
             return 'State fun fact value required';
+        }
+
+        const funfacts = this.state.funfacts;
+        const state = this.state.state;
+        if (funfacts === undefined) {
+            return `No Fun Facts found for ${state}`;
+        }
+
+        if (index > funfacts.length) {
+            return `No Fun Fact found at that index for ${state}`;
+        }
+
+        return null;
+    }
+
+    verifyDeleteBody(){
+        const index = this.body.index;
+        if (index === undefined) {
+            return 'State fun fact index value required';
         }
 
         const funfacts = this.state.funfacts;
