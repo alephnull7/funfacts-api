@@ -198,7 +198,7 @@ class StatesController {
 
         const funfacts = this.state.funfacts;
         const state = this.state.state;
-        if (funfacts === 'undefined') {
+        if (funfacts === undefined) {
             return `No Fun Facts found for ${state}`;
         }
 
