@@ -113,8 +113,8 @@ class StatesController {
         const message = this.verifyCreateBody();
         if (message !== null) return this.sentBadRequest(res, message);
 
-        const isCreate = !this.state.hasOwnProperty('funfacts');
-        if (isCreate) {
+        if (this.state.funfacts === undefined) {
+            this.state.funfacts = this.body.funfacts;
             await this.createState(res);
         } else {
             this.state.funfacts = this.state.funfacts.concat(this.body.funfacts);
@@ -147,7 +147,7 @@ class StatesController {
             console.log(`Creating new State entity for ${this.state.state}: `, this.body.funfacts);
             const result = await State.create({
                 stateCode: this.stateCode,
-                funfacts: this.body.funfacts
+                funfacts: this.state.funfacts
             });
             console.log(`Result of creating new State entity for ${this.state.state}: `, result);
             res.status(201).json(result);
