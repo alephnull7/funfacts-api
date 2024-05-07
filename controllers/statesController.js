@@ -139,7 +139,12 @@ class StatesController {
 
         console.log(`Deleting funfact for ${this.state.state} at index ${this.body.index-1}`);
         this.state.funfacts.splice(this.body.index-1, 1);
-        await this.updateState(res);
+
+        if (this.state.funfacts.length === 0) {
+            await this.deleteState(res);
+        } else {
+            await this.updateState(res);
+        }
     }
 
     async createState(res) {
@@ -163,6 +168,19 @@ class StatesController {
             stateMongo.funfacts = this.state.funfacts;
             const result = await stateMongo.save();
             console.log(`Result of updating State entity for ${this.state.state}: `, result);
+            res.status(200).json(result);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    async deleteState(res){
+        try {
+            console.log(`Deleting State entity for ${this.state.state}`);
+            const stateMongo = await State.findOne({ stateCode: this.stateCode }).exec();
+            const result = await stateMongo.deleteOne();
+            this.state.funfacts = undefined;
+            console.log(`Result of deleting State entity for ${this.state.state}: `, result);
             res.status(200).json(result);
         } catch (e) {
             console.error(e);
