@@ -9,6 +9,7 @@ function undefinedRoute(req, res, responseBody) {
             res.json({ message: responseBody });
             break;
         case 'text/html':
+        case '*/*':
             const parentDir = path.resolve(__dirname, '..');
             const localPath = path.join(parentDir, 'views', '404.html');
             res.sendFile(localPath);
