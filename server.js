@@ -14,11 +14,6 @@ app.use(express.json());
 // Middleware to enable CORS
 app.use(cors());
 
-// Middleware to add a delay
-app.use((req, res, next) => {
-    setTimeout(next, 1000);
-});
-
 // API routes
 app.use('/states', statesRouter);
 
