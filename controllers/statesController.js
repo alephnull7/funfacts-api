@@ -117,6 +117,8 @@ class StatesController {
 
         console.log(`Creating funfacts for ${this.state.state}`);
         const isCreate = !this.state.hasOwnProperty('funfacts');
+        console.log('Current funfacts in the State entity: ', this.state.funfacts);
+        console.log('A new State entity will be created: ', isCreate);
         if (isCreate) {
             await this.createState(res);
         } else {
