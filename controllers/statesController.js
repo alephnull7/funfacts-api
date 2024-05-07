@@ -110,15 +110,10 @@ class StatesController {
 
     async createFunFact(req, res) {
         await this.setReqProperties(req);
-        const properties = ['funfacts'];
-        if (!this.verifyBody(properties)) {
-            return this.sentBadRequest(res, 'Valid funfacts required');
-        }
+        const message = this.verifyCreateBody();
+        if (message !== null) return this.sentBadRequest(res, message);
 
-        console.log(`Creating funfacts for ${this.state.state}`);
         const isCreate = !this.state.hasOwnProperty('funfacts');
-        console.log('Current funfacts in the State entity: ', this.state.funfacts);
-        console.log('A new State entity will be created: ', isCreate);
         if (isCreate) {
             await this.createState(res);
         } else {
@@ -129,10 +124,8 @@ class StatesController {
 
     async updateFunFact(req, res) {
         await this.setReqProperties(req);
-        const properties = ['funfact', 'index'];
-        if (!this.verifyBody(properties)) {
-            return this.sentBadRequest(res, 'Valid funfact and index required');
-        }
+        const message = this.verifyUpdateBody();
+        if (message !== null) return this.sentBadRequest(res, message);
 
         console.log(`Updating funfact for ${this.state.state} at index ${this.body.index-1}`);
         this.state.funfacts.splice(this.body.index-1, 1, this.body.funfact);
@@ -141,10 +134,8 @@ class StatesController {
 
     async deleteFunFact(req, res) {
         await this.setReqProperties(req);
-        const properties = ['index'];
-        if (!this.verifyBody(properties)) {
-            return this.sentBadRequest(res, 'Valid index required');
-        }
+        const message = this.verifyUpdateBody();
+        if (message !== null) return this.sentBadRequest(res, message);
 
         console.log(`Deleting funfact for ${this.state.state} at index ${this.body.index-1}`);
         this.state.funfacts.splice(this.body.index-1, 1);
@@ -183,16 +174,39 @@ class StatesController {
         res.status(400).json({ message });
     }
     
-    verifyBody(properties){
-        for (const property of properties) {
-            if (!this.body.hasOwnProperty(property)) {
-                return property;
-            }
+    verifyCreateBody(){
+        const funfacts = this.body.funfacts;
+
+        if (funfacts === undefined) {
+            return 'State fun facts value required';
+        } else if (!Array.isArray(funfacts)) {
+            return 'State fun facts value must be an array';
         }
-        if (this.body?.index > this.state?.funfacts?.length) {
-            return false;
+        return null;
+    }
+
+    verifyUpdateBody(){
+        const index = this.body.index;
+        if (index !== undefined) {
+            return 'State fun fact index value required';
         }
-        return true;
+
+        const funfact = this.body.funfact;
+        if (typeof funfact !== 'string') {
+            return 'State fun fact value required';
+        }
+
+        const funfacts = this.state.funfacts;
+        const state = this.state.state;
+        if (funfacts === 'undefined') {
+            return `No Fun Facts found for ${state}`;
+        }
+
+        if (index > funfacts.length) {
+            return `No Fun Fact found at that index for ${state}`;
+        }
+
+        return null;
     }
 }
 
