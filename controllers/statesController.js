@@ -22,9 +22,6 @@ class StatesController {
     async setState() {
         this.state = this.states.find((state) => state.code === this.stateCode);
         const stateMongo = await State.findOne({ stateCode: this.stateCode }).exec();
-        console.log(`The State document for ${this.state.state}: `, stateMongo);
-        console.log(`The State document for ${this.state.state} is null: `, stateMongo === null);
-        console.log(`The JSON entry for ${this.state.state}: `, this.state);
         if (stateMongo !== null) this.state.funfacts = stateMongo.funfacts;
     }
 
@@ -60,7 +57,6 @@ class StatesController {
 
     async getState(req, res) {
         await this.setReqProperties(req);
-        console.log(`The response body for the GET request: `, this.state);
         res.status(200).json(this.state);
     }
 
@@ -100,7 +96,6 @@ class StatesController {
         if (typeof propVal === 'number') propVal = propVal.toLocaleString(undefined, { useGrouping: true });
         this.state = { state: this.state.state };
         this.state[propName] = propVal;
-        console.log(`The response body for the subset GET request: `, this.state);
     }
 
     setFunFact() {
@@ -111,7 +106,6 @@ class StatesController {
         } else {
             this.funFact = { message: `No Fun Facts found for ${this.state.state}` };
         }
-        console.log(`The response body for the funfact GET request: `, this.funFact);
     }
 
     async createFunFact(req, res) {
